@@ -7,17 +7,19 @@ public class LetterData : MonoBehaviour
 {
     private Rigidbody2D rb2;
     [SerializeField]
-    private readonly string[] letter = new string[] { "A", "S", "D" };
-    private bool isInsideCollider = false;
+    private readonly string[] _letter = new string[] { "A", "S", "D" };
+    private bool _isInsideCollider = false;
 
+    //reference to the object with the stats
+    private GameStatsManager objStatsHolder;
 
     public string letterValue { get; private set; }
 
     private string randomGen()
     {
-        int r = Random.Range(0, letter.Length);
+        int r = Random.Range(0, _letter.Length);
 
-        return letter[r];
+        return _letter[r];
     }
 
     // Start is called before the first frame update
@@ -26,6 +28,7 @@ public class LetterData : MonoBehaviour
         rb2 = gameObject.GetComponent<Rigidbody2D>();
         letterValue = randomGen();
         GetComponentInChildren<TextMeshProUGUI>().text = letterValue;
+        objStatsHolder = FindFirstObjectByType<GameStatsManager>();
     }
 
     private void Update()
@@ -43,28 +46,38 @@ public class LetterData : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        isInsideCollider = true;
+        _isInsideCollider = true;
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        isInsideCollider = false;
+        _isInsideCollider = false;
         //Maybe change PRESSED IN SEQUENCE STRIKE system to 0 like in guitar hero?
     }
 
     private void CheckPressedKey(string inputString)
     {
-        if(isInsideCollider)
+        if(_isInsideCollider)
         {
-            if(inputString[0].ToString().ToUpper() == letterValue)
+            //Do Stuff when correct letter pressed
+            if (inputString[0].ToString().ToUpper() == letterValue)
             {
                 Destroy(gameObject);
+                objStatsHolder.changeScore(1);
                 Debug.Log("nice");
             }
-            //Do Stuff when correct letter pressed
+            //Do Stuff ONLY when wrong letter pressed
             else
             {
                 Debug.Log("Wrong key buddy");
+
+                if(objStatsHolder.changeHearts(-1) == 0)
+                {
+                    //GAMEOVER;
+                    //SAVE SCORE AND MOVE TO MAIN MENU
+                    Debug.Log("GAME OVER");
+                }
+
                 Destroy(gameObject);
             }
         }
