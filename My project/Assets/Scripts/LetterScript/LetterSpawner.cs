@@ -11,8 +11,10 @@ public class LetterSpawner : MonoBehaviour
 
     private float _spawnerTimer;
     private int _lettersToFinishRun;
+    private GameStatsManager _objStatsHolder;
 
-    
+    [SerializeField]
+    private GameObject[] level;
 
     private void Start()
     {
@@ -20,6 +22,7 @@ public class LetterSpawner : MonoBehaviour
         _spawnerTimer = 2.2f;
         //Amount of letters to the level end, can change based on difficulty
         _lettersToFinishRun = 10;
+        _objStatsHolder = FindFirstObjectByType<GameStatsManager>();
     }
 
     private void Update()
@@ -27,7 +30,7 @@ public class LetterSpawner : MonoBehaviour
         //Spawn letter if timer is 0 and there's still letters in the counter
         while(_spawnerTimer <= 0f && _lettersToFinishRun > 0)
         {
-            Instantiate(letter, spawnerInitialPosition);
+            GameObject temp = Instantiate(letter, spawnerInitialPosition);
             _spawnerTimer = 2.2f;
             _lettersToFinishRun--;
         }
@@ -35,4 +38,10 @@ public class LetterSpawner : MonoBehaviour
         _spawnerTimer -= Time.deltaTime;
 
     }
+
+    void nextPhase()
+    {
+        
+    }
 }
+

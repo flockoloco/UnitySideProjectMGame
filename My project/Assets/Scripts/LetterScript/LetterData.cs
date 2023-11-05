@@ -11,9 +11,10 @@ public class LetterData : MonoBehaviour
     private bool _isInsideCollider = false;
 
     //reference to the object with the stats
-    private GameStatsManager objStatsHolder;
+    private GameStatsManager _objStatsHolder;
 
     public string letterValue { get; private set; }
+    public bool isLastLetter;
 
     private string randomGen()
     {
@@ -28,7 +29,7 @@ public class LetterData : MonoBehaviour
         rb2 = gameObject.GetComponent<Rigidbody2D>();
         letterValue = randomGen();
         GetComponentInChildren<TextMeshProUGUI>().text = letterValue;
-        objStatsHolder = FindFirstObjectByType<GameStatsManager>();
+        _objStatsHolder = FindFirstObjectByType<GameStatsManager>();
     }
 
     private void Update()
@@ -52,6 +53,7 @@ public class LetterData : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         _isInsideCollider = false;
+        Destroy(gameObject);
         //Maybe change PRESSED IN SEQUENCE STRIKE system to 0 like in guitar hero?
     }
 
@@ -63,19 +65,21 @@ public class LetterData : MonoBehaviour
             if (inputString[0].ToString().ToUpper() == letterValue)
             {
                 Destroy(gameObject);
-                objStatsHolder.changeScore(1);
+                _objStatsHolder.changeScore(1);
                 Debug.Log("nice");
+
             }
             //Do Stuff ONLY when wrong letter pressed
             else
             {
                 Debug.Log("Wrong key buddy");
 
-                if(objStatsHolder.changeHearts(-1) == 0)
+                if(_objStatsHolder.changeHearts(-1) == 0)
                 {
                     //GAMEOVER;
                     //SAVE SCORE AND MOVE TO MAIN MENU
                     Debug.Log("GAME OVER");
+
                 }
 
                 Destroy(gameObject);
