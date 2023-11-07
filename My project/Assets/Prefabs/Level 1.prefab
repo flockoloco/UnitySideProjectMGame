@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 3235415683191656375}
   m_Layer: 0
   m_Name: Phase 4
-  m_TagString: Untagged
+  m_TagString: Phase
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -302,7 +302,7 @@ GameObject:
   - component: {fileID: 6730781725429697913}
   m_Layer: 0
   m_Name: Phase 3
-  m_TagString: Untagged
+  m_TagString: Phase
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -725,7 +725,7 @@ GameObject:
   - component: {fileID: 6451202854464663834}
   m_Layer: 0
   m_Name: Phase
-  m_TagString: Untagged
+  m_TagString: Phase
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1064,7 +1064,7 @@ GameObject:
   - component: {fileID: 6034315060741204412}
   m_Layer: 0
   m_Name: Phase 2
-  m_TagString: Untagged
+  m_TagString: Phase
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

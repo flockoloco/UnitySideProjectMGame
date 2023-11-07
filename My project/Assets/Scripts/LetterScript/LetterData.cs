@@ -42,7 +42,7 @@ public class LetterData : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb2.AddForce(transform.right * -5, ForceMode2D.Impulse);
+        rb2.AddForce(transform.right * -15, ForceMode2D.Impulse);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
