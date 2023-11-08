@@ -21,6 +21,7 @@ public class LetterSpawner : MonoBehaviour
     private GameObject[] phases;
     private int currentPhase = 0;
 
+    private bool _finishedAnimation = true;
 
     private void Start()
     {
@@ -42,7 +43,7 @@ public class LetterSpawner : MonoBehaviour
     private void Update()
     {
         //Spawn letter if timer is 0 and there's still letters in the counter
-        while (_spawnerTimer <= 0f && _lettersToFinishRun > 0)
+        while (_spawnerTimer <= 0f && _lettersToFinishRun > 0 && _finishedAnimation)
         {
             GameObject temp = Instantiate(letter, spawnerInitialPosition);
             _spawnerTimer = 1f;
@@ -65,25 +66,30 @@ public class LetterSpawner : MonoBehaviour
         if (_lettersToFinishRun <= 0)
         {
             currentPhase += 1;
-
+            _finishedAnimation = false;
+  
             StartCoroutine(MoveCamera());
-            
             _lettersToFinishRun = 10;
+
         }
 
     }
 
     IEnumerator MoveCamera()
     {
+        
         Vector3 startPosition = Camera.main.transform.position;
         float speed = 1f / 3;
         for (float t = 0; t < 1; t += Time.deltaTime * speed)
         {
-
             Camera.main.transform.position = Vector3.Lerp(startPosition, new Vector3(phases[currentPhase].transform.localPosition.x, phases[currentPhase].transform.localPosition.y, -10), t);
-            yield return null;
-        }
+            
+            yield return new WaitForEndOfFrame();
 
+        }
+        _finishedAnimation = true;
+        yield return null;
+        
     }
 
     IEnumerator LoadAsyncScene(string scene)
