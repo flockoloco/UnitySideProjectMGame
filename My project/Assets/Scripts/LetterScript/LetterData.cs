@@ -53,7 +53,8 @@ public class LetterData : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         _isInsideCollider = false;
-        Destroy(gameObject);
+        // TODO: GIVE A FEW SECONDS AND THEN REMOVE OR JUST SHOW LIL ANIMATION
+        removeFromWrld();
         //Maybe change PRESSED IN SEQUENCE STRIKE system to 0 like in guitar hero?
     }
 
@@ -64,7 +65,7 @@ public class LetterData : MonoBehaviour
             //Do Stuff when correct letter pressed
             if (inputString[0].ToString().ToUpper() == letterValue)
             {
-                Destroy(gameObject);
+                removeFromWrld();
                 _objStatsHolder.changeScore(1);
                 Debug.Log("nice");
 
@@ -82,10 +83,14 @@ public class LetterData : MonoBehaviour
 
                 }
 
-                Destroy(gameObject);
+                removeFromWrld();
             }
         }
     }
 
-
+    private void removeFromWrld()
+    {
+        LetterSpawner.removeThyFromList(this.gameObject);
+        Destroy(gameObject);
+    }
 }
