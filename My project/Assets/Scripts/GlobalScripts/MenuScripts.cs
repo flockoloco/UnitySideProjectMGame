@@ -5,12 +5,21 @@ using UnityEngine.SceneManagement;
 
 public class MenuScripts : MonoBehaviour
 {
-    public void LoadScene(string scene)
+    public static MenuScripts instance { get; private set; }
+    private void Awake()
     {
-        StartCoroutine(LoadAsyncScene(scene));
+        if(instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else { instance = this; }
+    }
+    public void LoadScene(int scene)
+    {
+        instance.StartCoroutine(LoadAsyncScene(scene));
     }
 
-    IEnumerator LoadAsyncScene(string scene)
+    private IEnumerator LoadAsyncScene(int scene)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene);
 

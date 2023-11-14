@@ -53,7 +53,8 @@ public class LetterSpawner : MonoBehaviour
         //If currentPhase is after the last phase length then GG
         if (currentPhase >= phases.Length)
         {
-            StartCoroutine(LoadAsyncScene("MainMenu"));
+            //Main MEnu has index 0
+            MenuScripts.instance.LoadScene(0);
         }
         //Dont spawn until animation is finished
         if (!_animationIsPlaying && _timerToStartToSpawnLetters <= 0.0f)
@@ -119,14 +120,6 @@ public class LetterSpawner : MonoBehaviour
         yield return null;
     }
 
-    IEnumerator LoadAsyncScene(string scene)
-    {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scene);
-
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
-    }
+    
 }
 
