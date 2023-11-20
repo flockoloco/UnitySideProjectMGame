@@ -3,15 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameStatsManager : MonoBehaviour
+public sealed class GameStatsManager : MonoBehaviour
 {
-    public int _playerHearts { get; private set; } = 5;
-    public int _playerScore { get; private set; } = 0;
+    //single Tom and jerry
+    public static GameStatsManager instance { get; private set; }
+    public int _playerHearts { get; set; } = 5;
+    public int _playerScore { get; set; } = 0;
     //1 being normal / 2 Hard
     public int _playerDifficulty { get; private set; } = 1;
 
+    private GameStatsManager() { }
+    public static GameStatsManager _instance;
+
+
     private void Awake()
     {
+
+        if (_instance == null)
+        {
+            _instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         DontDestroyOnLoad(this.gameObject);
     }
 

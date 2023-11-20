@@ -3,20 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuScripts : MonoBehaviour
+public sealed class MenuScripts : MonoBehaviour
 {
-    public static MenuScripts instance { get; private set; }
-    private void Awake()
+    private MenuScripts() { }
+    public static MenuScripts _instance;
+
+    public void Awake()
     {
-        if(instance != null && instance != this)
+        if (_instance == null)
         {
-            Destroy(this);
+            _instance = this;
         }
-        else { instance = this; }
+        else
+        {
+            Destroy(gameObject);
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+
     }
+
     public void LoadScene(int scene)
     {
-        instance.StartCoroutine(LoadAsyncScene(scene));
+        StartCoroutine(LoadAsyncScene(scene));
     }
 
     private IEnumerator LoadAsyncScene(int scene)

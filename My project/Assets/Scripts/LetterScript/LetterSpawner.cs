@@ -17,7 +17,7 @@ public class LetterSpawner : MonoBehaviour
     //Letters Spawn cooldown  
     private float _spawnerTimer = 1.0f;
     //Amount of letters to spawn each phase
-    private int _lettersToFinishRun = 10;
+    private int _lettersToFinishRun;
     //Just some Quality of Life in the spawn of letters
     private float _timerToStartToSpawnLetters = 0.44f;
 
@@ -36,7 +36,7 @@ public class LetterSpawner : MonoBehaviour
     {
         //Default Time to spawn letter without interference of difficulty or time
         //Amount of letters to the level end, can change based on difficulty
-        _lettersToFinishRun = 10;
+        _lettersToFinishRun = 2;
 
         //Choose a random level among the levels available and instantiate it
         GameObject level = Instantiate(levelsAvailable[Random.Range(0, levelsAvailable.Length)]);
@@ -50,12 +50,6 @@ public class LetterSpawner : MonoBehaviour
 
     private void Update()
     {
-        //If currentPhase is after the last phase length then GG
-        if (currentPhase >= phases.Length)
-        {
-            //Main MEnu has index 0
-            MenuScripts.instance.LoadScene(0);
-        }
         //Dont spawn until animation is finished
         if (!_animationIsPlaying && _timerToStartToSpawnLetters <= 0.0f)
         {
@@ -91,10 +85,18 @@ public class LetterSpawner : MonoBehaviour
     {
         //must be first, we are moving to next phase durrh
         currentPhase += 1;
+
+        //If currentPhase is after the last phase length then GG
+        if (currentPhase >= phases.Length)
+        {
+            //Main MEnu has index 0
+            MenuScripts._instance.LoadScene(0);
+        }
+
         _animationIsPlaying = true;
         StartCoroutine(MoveCamera());
         //I think it doesnt matter this variable position because animationIsPlaying blocks anything to spawn
-        _lettersToFinishRun = 10;
+        _lettersToFinishRun = 2;
     }
     public static void removeThyFromList(GameObject item)
     {
