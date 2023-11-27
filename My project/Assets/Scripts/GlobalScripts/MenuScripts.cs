@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public sealed class MenuScripts : MonoBehaviour
 {
     private MenuScripts() { }
+
     public static MenuScripts _instance;
 
     public void Awake()

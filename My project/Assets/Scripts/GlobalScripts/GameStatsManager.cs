@@ -5,16 +5,13 @@ using UnityEngine.SceneManagement;
 
 public sealed class GameStatsManager : MonoBehaviour
 {
-    //single Tom and jerry
-    public static GameStatsManager instance { get; private set; }
+    private GameStatsManager() { }
+    public static GameStatsManager _instance;
+
     public int _playerHearts { get; set; } = 5;
     public int _playerScore { get; set; } = 0;
     //1 being normal / 2 Hard
     public int _playerDifficulty { get; private set; } = 1;
-
-    private GameStatsManager() { }
-    public static GameStatsManager _instance;
-
 
     private void Awake()
     {

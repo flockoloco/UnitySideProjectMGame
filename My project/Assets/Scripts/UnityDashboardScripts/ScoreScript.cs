@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class ScoreScript : AuthScript
 {
-    private int score = GameStatsManager.instance.changeScore(0);
+
     private async void AddNewScore()
     {
+        int score = GameStatsManager._instance.changeScore(0);
         if (string.IsNullOrWhiteSpace(score.ToString()))
         {
             return;

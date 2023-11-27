@@ -10,9 +10,6 @@ public class LetterData : MonoBehaviour
     private readonly string[] _letter = new string[] { "A", "S", "D" };
     private bool _isInsideCollider = false;
 
-    //reference to the object with the stats
-    private GameStatsManager _objStatsHolder;
-
     public string letterValue { get; private set; }
     public bool isLastLetter;
 
@@ -29,7 +26,6 @@ public class LetterData : MonoBehaviour
         rb2 = gameObject.GetComponent<Rigidbody2D>();
         letterValue = randomGen();
         GetComponentInChildren<TextMeshProUGUI>().text = letterValue;
-        _objStatsHolder = FindFirstObjectByType<GameStatsManager>();
     }
 
     private void Update()
@@ -66,7 +62,7 @@ public class LetterData : MonoBehaviour
             if (inputString[0].ToString().ToUpper() == letterValue)
             {
                 removeFromWrld();
-                _objStatsHolder.changeScore(1);
+                GameStatsManager._instance.changeScore(1);
                 Debug.Log("nice");
 
             }
@@ -75,7 +71,7 @@ public class LetterData : MonoBehaviour
             {
                 Debug.Log("Wrong key buddy");
 
-                if(_objStatsHolder.changeHearts(-1) == 0)
+                if(GameStatsManager._instance.changeHearts(-1) == 0)
                 {
                     //GAMEOVER;
                     //SAVE SCORE AND MOVE TO MAIN MENU
